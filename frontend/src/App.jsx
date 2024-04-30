@@ -13,16 +13,14 @@ import Show from "./pages/Show";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/show" element={<Show />} />
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/show" element={<Show />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   );
 };
 
