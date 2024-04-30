@@ -20,7 +20,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     const response = await axios.post(
-      "http://localhost:3000/register",
+      "https://textandyoutube.adaptable.app/register",
       payload
     );
 

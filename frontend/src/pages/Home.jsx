@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchSession = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/isAuth", {
+        const res = await axios.get("https://textandyoutube.adaptable.app/isAuth", {
           withCredentials: true,
         });
         setSession(res.data.username);

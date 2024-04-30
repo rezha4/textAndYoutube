@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchSession = async () => {
-      const res = await axios.get("http://localhost:3000/isAuth", {
+      const res = await axios.get("https://textandyoutube.adaptable.app/isAuth", {
         withCredentials: true,
       });
       console.log(res)
