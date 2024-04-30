@@ -10,10 +10,7 @@ const bcrypt = require("bcrypt");
 const cookieparser = require("cookie-parser");
 
 const app = express();
-app.use(cors({
-  origin: "https://funny-yeot-ee0732.netlify.app",
-  credentials: true
-}));
+app.use(cors());
 
 // mongoDB init
 mongoose
