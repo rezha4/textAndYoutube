@@ -37,7 +37,7 @@ app.use(
     store: mySessions,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3, // 3 hours
-      secure: true,
+      secure: false,
       sameSite: "None",
     },
     resave: true,
