@@ -37,10 +37,11 @@ app.use(
     store: mySessions,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3, // 3 hours
-      httpOnly: false,
+      sameSite: "none",
+      secure: true,
+      httpOnly: true
     },
-    resave: false,
-    httpOnly: false,
+    resave: true,
     saveUninitialized: false,
   })
 );
@@ -82,6 +83,7 @@ app.post("/login", async (req, res) => {
   if (matchPassword) {
     const userSession = { username: user.username };
     req.session.user = userSession;
+    req.session.save();
 
     console.log(req.session);
 
@@ -107,6 +109,7 @@ app.get("/isAuth", async (req, res) => {
   console.log(req.session);
   console.log(req.cookies);
   if (req.session.user) {
+    req.session.save();
     return res.json(req.session.user);
   } else {
     return res.status(401).json("unauthorize");
