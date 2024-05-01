@@ -7,14 +7,19 @@ const Home = () => {
   const [text, setText] = useState("");
   const [youtube, setYoutube] = useState("");
   const [session, setSession] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSession = async () => {
       try {
-        const res = await axios.get("https://textandyoutube.adaptable.app/isAuth", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          "https://textandyoutube.adaptable.app/isAuth",
+          {
+            withCredentials: true,
+          }
+        );
         setSession(res.data.username);
       } catch (error) {
         console.error("Error fetching session:", error);
@@ -26,6 +31,11 @@ const Home = () => {
   }, [session]);
 
   const handleClick = () => {
+    if (!text || !youtube) {
+      setError(true);
+      setErrorMsg("text/youtube URL are required");
+      return;
+    }
     const searchParams = new URLSearchParams({ text, youtube });
     navigate(`/show?${searchParams.toString()}`);
   };
@@ -45,6 +55,7 @@ const Home = () => {
             Hi, {session}. Input the text to display & Youtube URL to
             show.
           </p>
+          {error && <p className="text-danger">Error: {errorMsg}</p>}
           <label className="form-label" htmlFor="text">
             Text to display
           </label>
@@ -54,6 +65,7 @@ const Home = () => {
             name="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            placeholder="any text"
           />
           <label className="form-label" htmlFor="youtube">
             Youtube URL to show
@@ -64,6 +76,7 @@ const Home = () => {
             name="youtube"
             value={youtube}
             onChange={(e) => setYoutube(e.target.value)}
+            placeholder={"eg: https://www.youtube.com/watch?v=34wC1C61lg0"}
           />
           <button
             className="btn btn-primary mt-4"

@@ -121,7 +121,7 @@ app.get("/isAuth", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ req: req.session });
+  res.json({ message: "textandyoutube API" });
 });
 
 app.listen(process.env.PORT, () => {

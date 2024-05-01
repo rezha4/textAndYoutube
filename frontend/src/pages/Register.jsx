@@ -9,6 +9,9 @@ const Register = () => {
     username: "",
     password: "",
   });
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,13 +22,27 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    const response = await axios.post(
-      "https://textandyoutube.adaptable.app/register",
-      payload
-    );
+    if (!payload.username || !payload.password) {
+      setError(true);
+      setErrorMsg("username/password are required");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://textandyoutube.adaptable.app/register",
+        payload
+      );
 
-    if (response.status === 200) {
-      navigate("/login");
+      if (response.status === 200) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+      setError(true);
+      setErrorMsg(error.message || "server error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,10 +50,12 @@ const Register = () => {
     <>
       <div className="m-4">
         <p>Please register</p>
+        {error && <p className="text-danger">Error: {errorMsg}</p>}
         <label className="form-label" htmlFor="username">
           username
         </label>
         <input
+          disabled={loading}
           className="form-control"
           type="text"
           name="username"
@@ -47,6 +66,7 @@ const Register = () => {
           password
         </label>
         <input
+          disabled={loading}
           className="form-control"
           type="password"
           name="password"
@@ -54,6 +74,7 @@ const Register = () => {
           onChange={(e) => handleChange(e)}
         />
         <button
+          disabled={loading}
           className="btn btn-primary mt-4"
           onClick={() => handleRegister()}
         >

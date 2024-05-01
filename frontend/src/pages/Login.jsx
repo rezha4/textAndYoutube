@@ -10,6 +10,7 @@ const Login = () => {
     password: "",
   });
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -21,6 +22,12 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
+    if (!payload.username || !payload.password) {
+      setError(true);
+      setErrorMsg("username/password can't be empty");
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await axios.post(
@@ -40,6 +47,7 @@ const Login = () => {
       }
     } catch (error) {
       setError(true);
+      setErrorMsg(error.message || "server error");
       console.error(error);
     } finally {
       setLoading(false);
@@ -55,7 +63,7 @@ const Login = () => {
             Register here
           </a>
         </p>
-        {error && <p className="text-danger">Error on login</p>}
+        {error && <p className="text-danger">Error: {errorMsg}</p>}
         <label className="form-label" htmlFor="username">
           username
         </label>
