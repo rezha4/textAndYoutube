@@ -11,7 +11,7 @@ const cookieparser = require("cookie-parser");
 
 const app = express();
 app.use(cors({
-  origin: "https://velvety-dasik-44a11f.netlify.app",
+  origin: ["https://velvety-dasik-44a11f.netlify.app", "http://localhost:5173", "http://localhost:4173", "https://funny-yeot-ee0732.netlify.app"],
   credentials: true
 }));
 
@@ -37,10 +37,9 @@ app.use(
     store: mySessions,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3, // 3 hours
-      secure: true,
-      httpOnly: false,
+      secure: false,
     },
-    resave: false,
+    resave: true,
     saveUninitialized: false,
   })
 );
