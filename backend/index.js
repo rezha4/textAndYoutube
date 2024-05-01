@@ -10,6 +10,9 @@ const bcrypt = require("bcrypt");
 const cookieparser = require("cookie-parser");
 
 const app = express();
+
+app.set("trust proxy", 1);
+
 app.use(cors({
   origin: ["https://text-and-youtube.vercel.app", "https://velvety-dasik-44a11f.netlify.app", "http://localhost:5173", "http://localhost:4173", "https://funny-yeot-ee0732.netlify.app"],
   credentials: true
@@ -89,6 +92,7 @@ app.post("/login", async (req, res) => {
 
     return res
       .status(200)
+      .header("Content-Type", "application/json")
       .json({ msg: "You have logged in successfully", userSession }); // attach user session id to the response. It will be transfer in the cookies
   } else {
     return res.status(400).json({ msg: "Invalid credential" });
