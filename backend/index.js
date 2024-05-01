@@ -38,6 +38,7 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 3, // 3 hours
       secure: false,
+      sameSite: true,
     },
     resave: true,
     saveUninitialized: false,
