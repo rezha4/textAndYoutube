@@ -18,9 +18,7 @@ const Home = () => {
         setSession(res.data.username);
       } catch (error) {
         console.error("Error fetching session:", error);
-        if (error.response?.status === 401) {
-          navigate("/login");
-        }
+        navigate("/login");
       }
     };
 
@@ -33,38 +31,49 @@ const Home = () => {
   };
 
   return (
-    <div className="m-4">
-      <p>
-        Hi, {session}. Input the text to display & Youtube URL to
-        show.
-      </p>
-      <label className="form-label" htmlFor="text">
-        Text to display
-      </label>
-      <input
-        className="form-control"
-        type="text"
-        name="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <label className="form-label" htmlFor="youtube">
-        Youtube URL to show
-      </label>
-      <input
-        className="form-control"
-        type="text"
-        name="youtube"
-        value={youtube}
-        onChange={(e) => setYoutube(e.target.value)}
-      />
-      <button
-        className="btn btn-primary mt-4"
-        onClick={() => handleClick()}
-      >
-        Show!
-      </button>
-    </div>
+    <>
+      {session === "" ? (
+        <div className="mt-5 d-flex gap-2 justify-content-center align-items-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+          <h4>loading...</h4>
+        </div>
+      ) : (
+        <div className="m-4">
+          <p>
+            Hi, {session}. Input the text to display & Youtube URL to
+            show.
+          </p>
+          <label className="form-label" htmlFor="text">
+            Text to display
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            name="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <label className="form-label" htmlFor="youtube">
+            Youtube URL to show
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            name="youtube"
+            value={youtube}
+            onChange={(e) => setYoutube(e.target.value)}
+          />
+          <button
+            className="btn btn-primary mt-4"
+            onClick={() => handleClick()}
+          >
+            Show!
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

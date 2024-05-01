@@ -10,6 +10,7 @@ const Login = () => {
     password: "",
   });
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,20 +21,28 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const response = await axios.post(
-      "https://textandyoutube.adaptable.app/login",
-      payload,
-      {
-        withCredentials: true
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://textandyoutube.adaptable.app/login",
+        payload,
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(response);
+
+      if (response.status === 200) {
+        navigate("/");
+      } else {
+        setError(true);
       }
-    );
-
-    console.log(response);
-
-    if (response.status === 200) {
-      navigate("/");
-    } else {
+    } catch (error) {
       setError(true);
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,6 +60,7 @@ const Login = () => {
           username
         </label>
         <input
+          disabled={loading}
           className="form-control"
           type="text"
           name="username"
@@ -61,6 +71,7 @@ const Login = () => {
           password
         </label>
         <input
+          disabled={loading}
           className="form-control"
           type="password"
           name="password"
@@ -68,6 +79,7 @@ const Login = () => {
           onChange={(e) => handleChange(e)}
         />
         <button
+          disabled={loading}
           className="btn btn-primary mt-4"
           onClick={() => handleLogin()}
         >
