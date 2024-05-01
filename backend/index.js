@@ -85,7 +85,6 @@ app.post("/login", async (req, res) => {
     console.log(req.session);
 
     return res
-      .cookie("userSession", userSession)
       .status(200)
       .json({ msg: "You have logged in successfully", userSession }); // attach user session id to the response. It will be transfer in the cookies
   } else {
