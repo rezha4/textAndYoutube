@@ -37,10 +37,12 @@ app.use(
     store: mySessions,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3, // 3 hours
-      secure: false,
+      secure: true,
       sameSite: "None",
+      httpOnly: false,
     },
-    resave: true,
+    resave: false,
+    httpOnly: false,
     saveUninitialized: false,
   })
 );
