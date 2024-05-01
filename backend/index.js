@@ -37,9 +37,10 @@ app.use(
     store: mySessions,
     cookie: {
       maxAge: 1000 * 60 * 60 * 3, // 3 hours
-      secure: false, // to turn on just in production
+      secure: true,
+      httpOnly: false,
     },
-    resave: true,
+    resave: false,
     saveUninitialized: false,
   })
 );
